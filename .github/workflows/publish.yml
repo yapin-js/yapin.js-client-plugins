@@ -1,0 +1,62 @@
+name: publish
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'plugins/**'
+      - 'revoked.json'
+      - 'scripts/**'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# One deployment at a time, and never cancel one halfway: a half-written index is worse than a stale
+# one, because clients would read it.
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deploy.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install
+        run: npm install --no-audit --no-fund
+
+      # Nothing is signed if an entry doesn't match its hash, so check before touching the key.
+      - name: Check every entry
+        run: npm run check
+
+      - name: Sign and build the index
+        env:
+          REGISTRY_KEY: ${{ secrets.REGISTRY_KEY }}
+          REGISTRY_PUBLIC_KEY: ${{ vars.REGISTRY_PUBLIC_KEY }}
+          REGISTRY_KEY_ID: ${{ vars.REGISTRY_KEY_ID || 'yapin-registry' }}
+          REGISTRY_BASE_URL: ${{ vars.REGISTRY_BASE_URL }}
+        run: npm run publish
+
+      # Pages serves the artifact at the repository root, so a custom domain needs its CNAME inside it.
+      - name: Add the custom domain
+        if: vars.REGISTRY_DOMAIN != ''
+        run: echo "${{ vars.REGISTRY_DOMAIN }}" > dist/CNAME
+
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist
+
+      - id: deploy
+        uses: actions/deploy-pages@v4

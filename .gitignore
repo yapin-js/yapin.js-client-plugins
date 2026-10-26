@@ -1,0 +1,11 @@
+node_modules/
+
+# Built by scripts/publish.js, deployed by CI. Never committed.
+dist/
+
+# Private signing keys never belong in a repository. The *public* key does — it is how a client app
+# author gets the key to put in their plugins.trust list, so keys/registry.pub is committed.
+*.key
+*.pem
+registry-key
+

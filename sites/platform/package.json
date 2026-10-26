@@ -1,0 +1,24 @@
+{
+  "name": "yapin-platform",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "platform.yapin.dev: publisher accounts, submissions, verification and API tokens.",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "next": "16.4.3",
+    "react": "19.3.1",
+    "react-dom": "19.3.1",
+    "server-only": "0.0.1",
+    "yapin.js-client": "github:yapin-js/yapin.js-client#main"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "license": "MIT"
+}

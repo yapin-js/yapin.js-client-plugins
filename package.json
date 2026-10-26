@@ -1,0 +1,20 @@
+{
+  "name": "yapin.js-client-plugins",
+  "version": "0.1.0",
+  "private": true,
+  "description": "The index of plugins for yapin.js-client client apps.",
+  "type": "module",
+  "scripts": {
+    "check": "node scripts/check.js",
+    "fetch": "node scripts/fetch.js",
+    "publish": "node scripts/publish.js",
+    "test": "node scripts/check.js"
+  },
+  "devDependencies": {
+    "yapin.js-client": "github:yapin-js/yapin.js-client#main"
+  },
+  "engines": {
+    "node": ">=18.17"
+  },
+  "license": "MIT"
+}

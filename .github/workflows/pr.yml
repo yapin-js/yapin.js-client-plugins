@@ -1,0 +1,47 @@
+name: check
+
+on:
+  pull_request:
+    paths:
+      - 'plugins/**'
+      - 'revoked.json'
+      - 'scripts/**'
+      - 'schema/**'
+      - 'package.json'
+      - '.github/workflows/pr.yml'
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+# A submission is third-party code. Nothing here runs it: the checks parse and bundle it, and the
+# download comparison treats what it fetches as bytes. Keep this job read-only.
+permissions:
+  contents: read
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      # Tracks the framework's main branch, so a change there that would break a listed plugin shows
+      # up here. Pin to a released version once plugin-kit ships (^0.1.6).
+      - name: Install
+        run: npm install --no-audit --no-fund
+
+      - name: Check every entry
+        run: npm run check
+
+      # Confirms each committed copy still matches the address its author publishes it at. Network
+      # failures only warn; a genuine mismatch fails the job.
+      - name: Compare against the authors' own copies
+        run: npm run fetch -- --allow-offline
+
+      # Builds dist/ with a throwaway key, so a publish problem is caught in the pull request rather
+      # than after merge.
+      - name: Build the index (dry run)
+        run: npm run publish -- --dry-run

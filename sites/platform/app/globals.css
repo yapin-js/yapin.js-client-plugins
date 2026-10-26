@@ -1,0 +1,147 @@
+/*
+ * The stylesheet, in Yapin's own design language so the platform doesn't feel like a different
+ * product. The token block is copied from Yapin's own stylesheet; the component rules below
+ * reproduce its buttons, fields and cards rather than inventing a second set.
+ *
+ * Dark only for now. Yapin' ships a light theme too, and the token block is the only thing a light
+ * theme here would have to override.
+ */
+
+:root{
+  --bg-rail:#141519;--bg-side:#1b1c21;--bg-main:#222329;--bg-elev:#2b2c33;
+  --bg-hover:#2f3038;--bg-active:#383944;--bg-input:#2d2e36;--bg-float:#1b1c21;
+  --text:#ececf1;--text-muted:#9c9daa;--text-faint:#9294a1;--border:#ffffff12;
+  --accent:#ff6b4a;--accent-hover:#ff5a35;--accent-soft:#ff6b4a29;--on-accent:#fff;
+  --danger:#f2555a;--success:#3fcf82;--warning:#f5b544;
+  --shadow:0 10px 40px #00000073;--radius:10px;
+  --font:"Inter",ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+  --mono:ui-monospace,SFMono-Regular,Consolas,monospace;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+html,body{margin:0;min-height:100%}
+body{
+  background:var(--bg-main);color:var(--text);font-family:var(--font);font-size:15px;line-height:1.4;
+  font-feature-settings:"cv11","ss01","calt";-webkit-font-smoothing:antialiased;text-rendering:optimizelegibility;
+}
+a{color:var(--accent);text-decoration:none}
+a:hover{text-decoration:underline}
+img{display:block}
+h1,h2,h3{line-height:1.2;margin:0}
+h1{font-size:30px;font-weight:800;letter-spacing:-.01em}
+h2{font-size:19px;font-weight:700}
+h3{font-size:15px;font-weight:600}
+p{margin:0}
+code{font-family:var(--mono);font-size:13px;background:var(--bg-input);border-radius:6px;padding:1px 6px}
+pre{font-family:var(--mono);font-size:12.5px;background:var(--bg-rail);border:1px solid var(--border);border-radius:8px;padding:12px 14px;overflow-x:auto;margin:0}
+pre code{background:0 0;padding:0}
+@supports (scrollbar-color:auto){*{scrollbar-color:var(--bg-active) transparent;scrollbar-width:thin}}
+:is(button,a,input,select,textarea,[tabindex]):focus-visible{outline:2px solid color-mix(in srgb,var(--accent) 85%,#fff);outline-offset:1px}
+
+/* --- shell ------------------------------------------------------------------------------------ */
+.top{
+  position:sticky;top:0;z-index:10;display:flex;align-items:center;gap:16px;
+  height:56px;padding:0 20px;background:var(--bg-side);border-bottom:1px solid var(--border);
+}
+.brand{display:flex;align-items:center;gap:9px;font-weight:700;color:var(--text);font-size:15px}
+.brand:hover{text-decoration:none}
+.brand .mark{
+  width:26px;height:26px;border-radius:7px;display:grid;place-items:center;flex-shrink:0;
+  background:var(--accent);color:var(--on-accent);font-size:14px;font-weight:800;
+}
+.brand .sub{color:var(--text-muted);font-weight:500}
+.top nav{display:flex;align-items:center;gap:2px;margin-left:auto}
+.top nav a{
+  color:var(--text-muted);font-size:14px;font-weight:500;padding:7px 11px;border-radius:8px;
+}
+.top nav a:hover{background:var(--bg-hover);color:var(--text);text-decoration:none}
+.top nav a[aria-current=page]{background:var(--bg-active);color:var(--text)}
+.who{display:flex;align-items:center;gap:9px;padding-left:10px;margin-left:6px;border-left:1px solid var(--border)}
+.who .avatar{width:28px;height:28px;border-radius:999px;background:var(--bg-active);display:grid;place-items:center;font-size:12px;font-weight:700;color:var(--text-muted);overflow:hidden}
+.who .avatar img{width:100%;height:100%}
+.who .name{font-size:14px;font-weight:600;max-width:140px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+main{max-width:980px;margin:0 auto;padding:32px 20px 72px}
+main.narrow{max-width:620px}
+footer{
+  max-width:980px;margin:0 auto;padding:0 20px 40px;color:var(--text-faint);font-size:13px;
+  display:flex;flex-wrap:wrap;gap:4px 16px;align-items:center;
+}
+footer a{color:var(--text-muted)}
+
+/* --- blocks ----------------------------------------------------------------------------------- */
+.stack{display:flex;flex-direction:column;gap:14px}
+.stack.tight{gap:8px}
+.stack.loose{gap:28px}
+.row{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.row.end{justify-content:flex-end}
+.spread{display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:12px}
+.lede{color:var(--text-muted);font-size:16px;max-width:62ch}
+.hint{color:var(--text-muted);font-size:13px}
+.faint{color:var(--text-faint)}
+.card{background:var(--bg-elev);border:1px solid var(--border);border-radius:var(--radius);padding:16px 18px}
+.card.pad{padding:22px 24px}
+.card-title{display:flex;align-items:center;gap:9px;font-weight:600}
+.hero{padding:16px 0 8px}
+.section-head{display:flex;align-items:baseline;justify-content:space-between;gap:12px;margin-bottom:2px}
+
+.tag{display:inline-block;font-size:11px;font-weight:700;letter-spacing:.02em;padding:2px 8px;border-radius:999px;background:var(--bg-active);color:var(--text-muted)}
+.tag.ok{background:color-mix(in srgb,var(--success) 20%,transparent);color:var(--success)}
+.tag.warn{background:color-mix(in srgb,var(--warning) 20%,transparent);color:var(--warning)}
+.tag.danger{background:color-mix(in srgb,var(--danger) 20%,transparent);color:var(--danger)}
+.tag.accent{background:var(--accent-soft);color:var(--accent)}
+
+.notice{border-left:3px solid var(--accent);background:var(--bg-elev);border-radius:8px;padding:12px 14px;font-size:14px}
+.notice.error{border-left-color:var(--danger)}
+.notice.success{border-left-color:var(--success)}
+.notice.warn{border-left-color:var(--warning)}
+
+.empty{color:var(--text-muted);text-align:center;padding:40px 20px;border:1px dashed var(--border);border-radius:var(--radius)}
+
+.kv{display:grid;grid-template-columns:max-content minmax(0,1fr);gap:6px 16px;margin:0;font-size:14px}
+.kv dt{color:var(--text-muted)}
+.kv dd{margin:0;min-width:0;overflow-wrap:anywhere}
+
+/* --- controls, as Yapin' draws them ----------------------------------------------------------- */
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:8px;flex-shrink:0;
+  height:40px;padding:0 16px;border:0;border-radius:8px;font:inherit;font-weight:600;cursor:pointer;
+  white-space:nowrap;background:var(--accent);color:var(--on-accent);
+  transition:background .12s,opacity .12s;
+}
+.btn:hover{background:var(--accent-hover);text-decoration:none}
+.btn:disabled{opacity:.5;cursor:default}
+.btn.secondary{background:var(--bg-active);color:var(--text)}
+.btn.secondary:hover{background:#45465282}
+.btn.danger{background:var(--danger);color:#fff}
+.btn.ghost{background:0 0;color:var(--text-muted)}
+.btn.ghost:hover{background:var(--bg-hover);color:var(--text)}
+.btn.small{height:32px;padding:0 12px;font-size:14px}
+.btn.block{width:100%}
+.btn .mark{width:18px;height:18px}
+
+.field{display:flex;flex-direction:column;gap:6px;margin-bottom:14px}
+.field label{text-transform:uppercase;letter-spacing:.04em;color:var(--text-muted);font-size:12px;font-weight:700}
+.input{
+  width:100%;height:42px;padding:0 12px;background:var(--bg-rail);color:inherit;font:inherit;
+  border:1px solid var(--border);border-radius:8px;outline:0;
+}
+.input:focus{border-color:var(--accent)}
+textarea.input{height:auto;min-height:90px;padding:10px 12px;resize:vertical;font-family:var(--mono);font-size:13px}
+.error{color:var(--danger);font-size:14px;margin:4px 0 10px}
+
+table{width:100%;border-collapse:collapse;font-size:14px}
+th{text-align:left;font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.04em;color:var(--text-muted);padding:0 12px 8px 0}
+td{padding:10px 12px 10px 0;border-top:1px solid var(--border);vertical-align:top}
+td.mono{font-family:var(--mono);font-size:13px;color:var(--text-muted)}
+
+.secret{display:flex;gap:8px;align-items:center}
+.secret code{flex:1;min-width:0;overflow-x:auto;white-space:nowrap;padding:9px 12px;background:var(--bg-rail);border:1px solid var(--border)}
+
+@media (max-width:620px){
+  h1{font-size:25px}
+  main{padding:24px 16px 56px}
+  .top{padding:0 14px;gap:10px}
+  .top nav a{padding:7px 9px}
+  .who .name{display:none}
+}
