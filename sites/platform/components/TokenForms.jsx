@@ -24,7 +24,7 @@ export function CreateTokenForm() {
     <>
       {state?.created ? (
         <Card title="Your new token">
-          <p className="hint" style={{ margin: '8px 0 12px' }}>
+          <p className="hint secret-note">
             Copy it now. It is stored only as a hash, so this is the one time it can be shown.
           </p>
           <div className="secret">

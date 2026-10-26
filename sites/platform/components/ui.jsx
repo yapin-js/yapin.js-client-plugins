@@ -60,11 +60,3 @@ export function Hint({ children, style }) {
     </p>
   );
 }
-
-export function SectionHead({ children }) {
-  return (
-    <div className="section-head">
-      <h2>{children}</h2>
-    </div>
-  );
-}

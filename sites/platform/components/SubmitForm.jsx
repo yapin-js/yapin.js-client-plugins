@@ -50,7 +50,7 @@ export default function SubmitForm() {
               defaultValue={values.source ?? ''}
             />
           </div>
-          <p className="hint" style={{ marginBottom: 14 }}>
+          <p className="hint mb-md">
             The header is checked the way a client checks it, and the id, name, version and author are read from it — there is
             nothing else to fill in.
           </p>

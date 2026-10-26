@@ -25,10 +25,10 @@ export default async function Dashboard({ searchParams }) {
     <>
       {submitted ? <Notice kind="success">Submitted. It is in the review queue.</Notice> : null}
 
-      <div className="spread" style={{ marginBottom: 22 }}>
+      <div className="spread mb-lg">
         <div>
           <h1>Your submissions</h1>
-          <p className="hint" style={{ marginTop: 6 }}>
+          <p className="hint mt-xs">
             Signed in as {user.displayName}
             {publisher?.firstSeen ? ` · member since ${publisher.firstSeen.slice(0, 10)}` : null}
           </p>
@@ -59,11 +59,7 @@ export default async function Dashboard({ searchParams }) {
                   <td className="mono">{s.version}</td>
                   <td>
                     <TrustTag trust={trustOf(s.state)} />
-                    {s.reviewNote ? (
-                      <div className="hint" style={{ marginTop: 4 }}>
-                        {s.reviewNote}
-                      </div>
-                    ) : null}
+                    {s.reviewNote ? <div className="hint mt-xs">{s.reviewNote}</div> : null}
                   </td>
                   <td className="mono">{s.submittedAt.slice(0, 10)}</td>
                 </tr>

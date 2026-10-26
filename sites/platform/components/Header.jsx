@@ -1,5 +1,7 @@
+import Image from 'next/image';
 import Link from 'next/link';
 import { endSession } from '../lib/auth.js';
+import { config } from '../lib/config.js';
 
 /**
  * The top bar. The sign-out form is a server action, so Next rejects it unless the Origin matches —
@@ -11,6 +13,7 @@ const NAV = [
   { href: '/submit', label: 'Submit', auth: true },
   { href: '/tokens', label: 'Tokens', auth: true },
   { href: '/docs', label: 'Docs' },
+  { href: `https://github.com/${config.frameworkRepo}`, label: 'GitHub', external: true },
 ];
 
 function Avatar({ user }) {
@@ -18,7 +21,7 @@ function Avatar({ user }) {
     /* eslint-disable-next-line @next/next/no-img-element -- an arbitrary external avatar host */
     return (
       <span className="avatar">
-        <img src={user.avatarUrl} alt="" width={28} height={28} />
+        <img src={user.avatarUrl} alt="" width={32} height={32} />
       </span>
     );
   }
@@ -37,17 +40,23 @@ export default function Header({ user, path = '/' }) {
   return (
     <header className="top">
       <Link className="brand" href="/">
-        <span className="mark">y</span>
+        <Image className="mark" src="/logo.png" alt="" width={38} height={38} priority />
         <span>
           yapin.js <span className="sub">platform</span>
         </span>
       </Link>
       <nav>
-        {NAV.filter((item) => !item.auth || user).map((item) => (
-          <Link key={item.href} href={item.href} aria-current={path === item.href ? 'page' : undefined}>
-            {item.label}
-          </Link>
-        ))}
+        {NAV.filter((item) => !item.auth || user).map((item) =>
+          item.external ? (
+            <a className="gh" key={item.href} href={item.href} target="_blank" rel="noreferrer">
+              {item.label}
+            </a>
+          ) : (
+            <Link key={item.href} href={item.href} aria-current={path === item.href ? 'page' : undefined}>
+              {item.label}
+            </Link>
+          ),
+        )}
         {user ? (
           <>
             <span className="who">

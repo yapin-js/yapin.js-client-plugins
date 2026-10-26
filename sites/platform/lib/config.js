@@ -45,6 +45,9 @@ export const config = {
    */
   devAuth: env('PLATFORM_DEV_AUTH') === '1',
 
+  /** The framework repository, linked from the header and the footer. */
+  frameworkRepo: env('FRAMEWORK_REPO', 'yapin-js/yapin.js-client'),
+
   /** The registry this platform feeds. Shown in the docs page. */
   registry: {
     repo: env('REGISTRY_REPO', 'yapin-js/yapin.js-client-plugins'),

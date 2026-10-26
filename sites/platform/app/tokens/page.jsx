@@ -12,16 +12,16 @@ export default async function Tokens() {
   const list = listTokens(user.id);
 
   return (
-    <div style={{ maxWidth: 620, margin: '0 auto' }}>
+    <div className="panel">
       <h1>API tokens</h1>
-      <p className="lede" style={{ margin: '10px 0 22px' }}>
+      <p className="lede tight">
         For publishing from a script or from CI. A token is not needed to read the index or download a plugin — those are
         public.
       </p>
 
       <CreateTokenForm />
 
-      <div style={{ marginTop: 22 }}>
+      <div className="mt-lg">
         {list.length ? (
           <Card>
             <table>
@@ -42,7 +42,7 @@ export default async function Tokens() {
                     </td>
                     <td className="mono">{t.preview}</td>
                     <td className="mono">{t.lastUsedAt ? t.lastUsedAt.slice(0, 10) : 'never used'}</td>
-                    <td style={{ textAlign: 'right' }}>
+                    <td className="right">
                       <RevokeTokenForm id={t.id} />
                     </td>
                   </tr>
